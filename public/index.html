@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050816">
+<title>VESPERA AI BOT — Your Smart AI Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/config.js"></script>
+<style>
+:root{--bg:#050816;--side:#080e1d;--panel:#0d172b;--panel2:#12213b;--line:#203653;--text:#eaf4ff;--muted:#91a7c5;--cyan:#39d9ff;--purple:#9a6cff;--shadow:0 18px 55px #0008}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -20%,#16285e 0,transparent 42%),var(--bg);color:var(--text);font:14px Inter,system-ui,sans-serif;min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.avatar{width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);box-shadow:0 0 24px #24caff70}.brand{display:flex;align-items:center;gap:13px}.brand h1{font-size:22px;letter-spacing:.24em;margin:0;color:var(--cyan)}.tag{color:var(--muted);font-size:11px;letter-spacing:.14em;margin-top:5px}
+.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.authcard{width:min(440px,100%);padding:30px;border:1px solid var(--line);border-radius:24px;background:#0b1428ee;box-shadow:var(--shadow)}.authcard h2{font-size:27px;margin:26px 0 7px}.muted{color:var(--muted);line-height:1.6}.field{width:100%;padding:13px 14px;margin:7px 0;background:#070d1c;border:1px solid var(--line);border-radius:12px;color:var(--text);outline:none}.field:focus{border-color:var(--cyan)}.primary{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(100deg,#20d4f5,#9271ff);color:#04111e;font-weight:800}.full{width:100%;margin-top:12px}.textbtn{background:none;border:0;color:var(--cyan);padding:8px}.status{font-size:12px;color:var(--muted);min-height:18px;margin-top:8px;overflow-wrap:anywhere}
+.layout{display:grid;grid-template-columns:270px 1fr;min-height:100vh}.sidebar{background:var(--side);border-right:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:18px}.sidebrand{display:flex;align-items:center;gap:10px}.sidebrand .avatar{width:44px;height:44px}.sidebrand strong{letter-spacing:.2em;color:var(--cyan)}.subbrand{font-size:10px;color:var(--muted);letter-spacing:.18em;margin-top:3px}.newchat{width:100%;text-align:left;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);color:var(--text)}.navtitle{font-size:10px;letter-spacing:.18em;color:var(--muted);margin:5px 0}.navitem{display:block;width:100%;text-align:left;padding:11px;border:0;border-radius:10px;background:none;color:#c0d0e7}.navitem:hover,.navitem.active{background:var(--panel2);color:var(--cyan)}.sidebottom{margin-top:auto}.main{min-width:0;display:flex;flex-direction:column;min-height:100vh}.top{height:70px;padding:0 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#080f20c9}.top h2{font-size:14px;letter-spacing:.1em}.pill{padding:8px 11px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--muted)}.content{width:min(1080px,100%);margin:auto;padding:28px 24px;flex:1;display:flex;flex-direction:column}.welcome{text-align:center;margin:auto auto 24px;max-width:700px}.welcome .avatar{width:112px;height:112px}.welcome h2{font-size:36px;margin:17px 0 8px}.gradient{background:linear-gradient(90deg,#3ddfff,#aa77ff);color:transparent;background-clip:text}.welcome p{color:var(--muted);line-height:1.7}.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}.chip{background:var(--panel);border:1px solid var(--line);color:#c6d8ef;padding:10px 13px;border-radius:20px}.chatlog{display:flex;flex-direction:column;gap:14px;padding-bottom:16px}.msg{max-width:84%;padding:14px 16px;border-radius:16px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}.msg.user{align-self:flex-end;background:#153454;border:1px solid #28517b}.msg.ai{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--cyan)}.composer{position:sticky;bottom:0;padding:18px 0 5px;background:linear-gradient(transparent,var(--bg) 28%)}.composebox{padding:10px;background:var(--panel);border:1px solid #2a496d;border-radius:18px;box-shadow:var(--shadow)}.composebox textarea{width:100%;min-height:55px;max-height:180px;resize:vertical;background:transparent;border:0;outline:0;color:var(--text);padding:8px}.composefoot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.composefoot select{padding:9px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);color:var(--text)}.send{margin-left:auto}.toolbtn{background:var(--panel2);border:1px solid var(--line);color:#c4d5ed;border-radius:10px;padding:9px 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}.card h3{margin:7px 0}.card p{color:var(--muted);line-height:1.65}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{max-width:100%}.filelabel{display:inline-block;padding:10px 12px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);cursor:pointer}.result img,.result video{max-width:100%;border-radius:14px;margin-top:14px}.docitem{display:flex;justify-content:space-between;gap:12px;padding:10px;border-bottom:1px solid var(--line)}.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:20px;z-index:10}.modalbox{width:min(500px,100%);padding:24px;border:1px solid var(--line);border-radius:20px;background:#0c162a}
+.light{--bg:#f3f7ff;--side:#eaf0fb;--panel:#fff;--panel2:#e6eefb;--line:#d2deef;--text:#14243d;--muted:#5d718e;background:var(--bg);color:var(--text)}.light .authcard,.light .top{background:#fff}.light .field{background:#f7f9ff;color:#15243a}.light .navitem{color:#344963}.light .msg.ai{background:#fff}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.sidebar{display:none}.top{padding:0 14px}.content{padding:18px 13px}.welcome h2{font-size:28px}.msg{max-width:96%}.composefoot select{max-width:42%}}
+</style></head><body>
+<div id="auth" class="auth"><div class="authcard">
+ <div class="brand"><img class="avatar" src="/vespera-avatar.png" alt="VESPERA profile image"><div><h1>VESPERA</h1><div class="tag">AI BOT · YOUR SMART AI COMPANION</div></div></div>
+ <h2 id="authTitle">Welcome to VESPERA</h2><p class="muted" id="authDesc">Sign in to access your personal AI workspace.</p>
+ <form id="authForm"><input id="fullName" class="field hidden" placeholder="Your name" autocomplete="name"><input id="email" class="field" type="email" placeholder="Email address" required autocomplete="email"><input id="password" class="field" type="password" placeholder="Password (minimum 6 characters)" required minlength="6" autocomplete="current-password"><button class="primary full" id="authSubmit">Sign in</button></form>
+ <p class="muted" id="authSwitchText">New to VESPERA? <button class="textbtn" id="authSwitch">Create account</button></p><div class="status" id="authStatus"></div><p class="muted" style="font-size:11px">Account authentication is handled by Supabase. Your AI provider keys are never stored in this browser.</p>
+ </div></div>
+<div id="app" class="layout hidden">
+<aside class="sidebar"><div class="sidebrand"><img class="avatar" src="/vespera-avatar.png" alt="VESPERA"><div><strong>VESPERA</strong><div class="subbrand">AI BOT</div></div></div>
+<button class="newchat" id="newChat">＋ &nbsp; New chat</button>
+<div><div class="navtitle">WORKSPACE</div><button class="navitem active" data-view="chat">✦ &nbsp; AI Chat</button><button class="navitem" data-view="media">▧ &nbsp; Image & Video Studio</button><button class="navitem" data-view="knowledge">⌕ &nbsp; Knowledge Base</button><button class="navitem" data-view="agents">◈ &nbsp; AI Agents</button><button class="navitem" data-view="features">✧ &nbsp; All Features</button></div>
+<div class="sidebottom"><div class="navtitle">ACCOUNT</div><button class="navitem" id="profileBtn">◉ &nbsp; My Profile</button><button class="navitem" id="themeBtn">☼ &nbsp; Dark / Light</button><button class="navitem" id="logoutBtn">↪ &nbsp; Sign out</button><div class="muted" id="userEmail" style="font-size:11px;overflow-wrap:anywhere"></div></div>
+</aside>
+<main class="main"><header class="top"><h2 id="pageTitle">VESPERA / AI CHAT</h2><div class="row"><button class="pill" id="langBtn">தமிழ்</button><button class="pill" id="exportBtn">Export chat</button></div></header>
+<section class="content" id="chatView"><div class="welcome" id="welcome"><img class="avatar" src="/vespera-avatar.png" alt="VESPERA profile image"><h2>Meet your <span class="gradient">AI companion</span></h2><p>ASK · ASSIST · AUTOMATE · INNOVATE<br>One workspace for conversations, research, coding and creativity.</p><div class="chips"><button class="chip" data-prompt="Explain a difficult topic in simple words">Explain something</button><button class="chip" data-prompt="Help me write a professional email">Write an email</button><button class="chip" data-prompt="Help me debug this code">Debug code</button><button class="chip" data-prompt="Research this topic: ">Research a topic</button></div></div>
+<div class="chatlog" id="chatlog"></div><div class="composer"><div class="composebox"><textarea id="prompt" placeholder="Message VESPERA... (Enter to send)"></textarea><div class="composefoot"><select id="model"><option value="anthropic">Claude</option><option value="openai">OpenAI</option><option value="gemini">Gemini</option></select><select id="agent"><option value="general">General assistant</option><option value="coder">Coding agent</option><option value="researcher">Research agent</option><option value="writer">Writing assistant</option><option value="tutor">Study tutor</option></select><label class="muted"><input type="checkbox" id="webSearch"> Web search</label><button class="primary send" id="sendBtn">Send ↑</button></div></div><div class="status" id="chatStatus"></div></div></section>
+<section class="content hidden" id="mediaView"><h2>Image & Video Studio</h2><p class="muted">Generate images, text-to-video and image-to-video. Provider access, quota and billing apply.</p><div class="grid">
+<div class="card"><h3>▧ Image generation</h3><textarea class="field" id="imagePrompt" placeholder="Describe the image..."></textarea><button class="primary" id="imageBtn">Generate image</button></div>
+<div class="card"><h3>▶ Video generation</h3><textarea class="field" id="videoPrompt" placeholder="Describe the video..."></textarea><label class="filelabel">Optional reference image <input type="file" id="videoImage" accept="image/png,image/jpeg,image/webp" hidden></label><div class="muted" id="videoFileName"></div><button class="primary" id="videoBtn" style="margin-top:10px">Generate video</button></div></div><div class="status" id="mediaStatus"></div><div class="result" id="mediaResult"></div></section>
+<section class="content hidden" id="knowledgeView"><h2>Private Knowledge Base</h2><p class="muted">Upload text/Markdown notes. VESPERA retrieves matching excerpts for your chat. Each account can access only its own documents.</p><div class="card"><div class="row"><label class="filelabel">Choose .txt / .md file <input type="file" id="knowledgeFile" accept=".txt,.md,text/plain,text/markdown" hidden></label><button class="primary" id="uploadDoc">Upload document</button></div><div class="status" id="knowledgeStatus"></div><div id="documents"></div></div></section>
+<section class="content hidden" id="agentsView"><h2>AI Agents</h2><p class="muted">Select an agent in the chat composer.</p><div class="grid"><div class="card"><h3>◈ General assistant</h3><p>Everyday conversations and planning.</p></div><div class="card"><h3>⌘ Coding agent</h3><p>Code generation, debugging and explanations.</p></div><div class="card"><h3>⌕ Research agent</h3><p>Research with optional live web search.</p></div><div class="card"><h3>✎ Writing assistant</h3><p>Draft, rewrite and summarize.</p></div><div class="card"><h3>▤ Study tutor</h3><p>Step-by-step learning support.</p></div></div></section>
+<section class="content hidden" id="featuresView"><h2>VESPERA Features</h2><div class="grid" id="featureGrid"></div></section>
+</main></div>
+<div class="modal hidden" id="profileModal"><div class="modalbox"><div class="brand"><img class="avatar" src="/vespera-avatar.png" alt="VESPERA"><div><h2>VESPERA Profile</h2><div class="muted">Your signed-in account</div></div></div><p id="profileEmail" class="muted"></p><button class="primary" id="closeProfile">Close</button></div></div>
+<script>
+const $=id=>document.getElementById(id);
+let sb=null,session=null,signupMode=false,currentMessages=[],currentConversationId=null,tamilMode=false;
+const featureData=[
+["Multiple AI model support","Choose Claude, OpenAI or Gemini when the corresponding provider key is configured."],
+["AI agents & custom assistant roles","General, coding, research, writing and tutoring agent presets."],
+["Tool calling & web retrieval","Optional Tavily web search. More secure server-side tools can be connected."],
+["Image generation","Prompt-based image creation through the configured Fal model."],
+["Video generation","Text-to-video and image-to-video request flow through the configured Fal models."],
+["Knowledge base / RAG starter","Private text and Markdown uploads with per-user retrieval in chat."],
+["Conversation history","Save and load conversations to your signed-in Supabase account."],
+["Conversation summaries","Ask the selected AI to summarize a conversation."],
+["Plugin integrations","Add provider integrations through server-side routes."],
+["Tamil & multilingual chat","Use Tamil, Tanglish or other languages supported by the chosen model."],
+["Dark and light themes","Switch the workspace theme."],
+["Profile and account","Email sign-up, sign-in, session refresh and sign-out."],
+["Export conversations","Download the current chat as a text file."],
+["No forced upgrade","No app-imposed daily message/image/video counters or subscription wall in this starter."]
+];
+$("featureGrid").innerHTML=featureData.map(x=>`<article class="card"><h3>${x[0]}</h3><p>${x[1]}</p></article>`).join("");
+function setAuthMode(signup){
+ signupMode=signup;$("authTitle").textContent=signup?"Create your VESPERA account":"Welcome to VESPERA";
+ $("authDesc").textContent=signup?"Create an account to start your AI workspace.":"Sign in to access your personal AI workspace.";
+ $("fullName").classList.toggle("hidden",!signup);$("authSubmit").textContent=signup?"Create account":"Sign in";
+ $("authSwitchText").innerHTML=signup?'Already have an account? <button class="textbtn" id="authSwitch">Sign in</button>':'New to VESPERA? <button class="textbtn" id="authSwitch">Create account</button>';
+ $("authSwitch").onclick=()=>setAuthMode(!signup);
+}
+function renderAuth(){
+ const logged=!!session;$("auth").classList.toggle("hidden",logged);$("app").classList.toggle("hidden",!logged);
+ if(logged){$("userEmail").textContent=session.user.email||"";$("profileEmail").textContent=session.user.email||"";loadConversations();}
+}
+async function init(){
+ try{
+  const cfg=window.VESPERA_SUPABASE_URL&&window.VESPERA_SUPABASE_ANON_KEY&&window.VESPERA_SUPABASE_URL.indexOf("YOUR_PROJECT")<0;
+  if(!window.supabase||!cfg){$("authStatus").textContent="Setup required: configure Supabase URL and anon key in public/config.js.";return;}
+  sb=window.supabase.createClient(window.VESPERA_SUPABASE_URL,window.VESPERA_SUPABASE_ANON_KEY);
+  const {data}=await sb.auth.getSession();session=data.session;
+  sb.auth.onAuthStateChange((_event,s)=>{session=s;renderAuth();});
+  renderAuth();
+ }catch(e){$("authStatus").textContent=e.message;}
+}
+$("authSwitch").onclick=()=>setAuthMode(true);
+$("authForm").onsubmit=async e=>{
+ e.preventDefault();if(!sb){$("authStatus").textContent="Supabase setup is required before sign-in can work.";return;}
+ $("authStatus").textContent="Please wait…";
+ const email=$("email").value.trim(),password=$("password").value;
+ const result=signupMode
+  ? await sb.auth.signUp({email,password,options:{data:{full_name:$("fullName").value.trim()}}})
+  : await sb.auth.signInWithPassword({email,password});
+ $("authStatus").textContent=result.error?result.error.message:(signupMode?"Account created. If email confirmation is enabled, check your inbox.":"Signed in.");
+ if(!result.error&&result.data.session){session=result.data.session;renderAuth();}
+};
+$("logoutBtn").onclick=async()=>{if(sb)await sb.auth.signOut();session=null;currentMessages=[];renderAuth();};
+$("profileBtn").onclick=()=>$("profileModal").classList.remove("hidden");$("closeProfile").onclick=()=>$("profileModal").classList.add("hidden");
+$("themeBtn").onclick=()=>document.body.classList.toggle("light");
+function showView(v){["chat","media","knowledge","agents","features"].forEach(x=>$(`${x}View`).classList.toggle("hidden",x!==v));document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));$("pageTitle").textContent="VESPERA / "+v.toUpperCase();if(v==="knowledge")loadDocuments();}
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+function addMessage(role,text){const d=document.createElement("div");d.className="msg "+(role==="user"?"user":"ai");d.textContent=text;$("chatlog").appendChild(d);d.scrollIntoView({behavior:"smooth",block:"end"});}
+function authHeaders(){return {authorization:"Bearer "+session.access_token};}
+async function saveConversation(){
+ if(!currentMessages.length||!session)return;
+ const title=(currentMessages.find(m=>m.role==="user")?.content||"New chat").slice(0,70);
+ const r=await fetch(currentConversationId?"/api/conversations/"+currentConversationId:"/api/conversations",{method:currentConversationId?"PUT":"POST",headers:{...authHeaders(),"content-type":"application/json"},body:JSON.stringify({title,messages:currentMessages})});
+ const d=await r.json();if(r.ok&&d.conversation)currentConversationId=d.conversation.id;
+}
+async function loadConversations(){
+ try{const r=await fetch("/api/conversations",{headers:authHeaders()});if(!r.ok)return;const d=await r.json();$("historyList")?.remove();const box=document.createElement("div");box.id="historyList";box.innerHTML='<div class="navtitle">RECENT CHATS</div>';(d.conversations||[]).slice(0,12).forEach(c=>{const b=document.createElement("button");b.className="navitem";b.textContent="◦ "+c.title;b.onclick=()=>openConversation(c);box.appendChild(b);});$("newChat").after(box);}catch(e){}
+}
+function openConversation(c){currentConversationId=c.id;currentMessages=c.messages||[];$("chatlog").innerHTML="";$("welcome").classList.toggle("hidden",currentMessages.length>0);currentMessages.forEach(m=>addMessage(m.role,m.content));showView("chat");}
+$("newChat").onclick=()=>{currentMessages=[];currentConversationId=null;$("chatlog").innerHTML="";$("welcome").classList.remove("hidden");showView("chat");};
+async function send(){
+ const text=$("prompt").value.trim();if(!text||!session)return;
+ $("prompt").value="";$("welcome").classList.add("hidden");currentMessages.push({role:"user",content:text});addMessage("user",text);$("chatStatus").textContent="VESPERA is thinking…";$("sendBtn").disabled=true;
+ try{
+  const r=await fetch("/api/chat",{method:"POST",headers:{...authHeaders(),"content-type":"application/json"},body:JSON.stringify({messages:currentMessages,model:$("model").value,agent:$("agent").value,webSearch:$("webSearch").checked})});
+  const d=await r.json();if(!r.ok)throw new Error(d.error||"Chat failed.");
+  currentMessages.push({role:"assistant",content:d.text});addMessage("assistant",d.text);$("chatStatus").textContent="";await saveConversation();loadConversations();
+ }catch(e){$("chatStatus").textContent=e.message;}finally{$("sendBtn").disabled=false;}
+}
+$("sendBtn").onclick=send;$("prompt").onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}};
+document.querySelectorAll("[data-prompt]").forEach(b=>b.onclick=()=>{$("prompt").value=b.dataset.prompt;$("prompt").focus();});
+$("exportBtn").onclick=()=>{const blob=new Blob([currentMessages.map(m=>m.role.toUpperCase()+": "+m.content).join("\n\n")],{type:"text/plain"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="vespera-chat.txt";a.click();URL.revokeObjectURL(a.href);};
+$("langBtn").onclick=()=>{tamilMode=!tamilMode;$("langBtn").textContent=tamilMode?"English":"தமிழ்";$("prompt").placeholder=tamilMode?"VESPERA-விடம் கேளுங்கள்...":"Message VESPERA...";};
+$("knowledgeFile").onchange=()=>{$("knowledgeStatus").textContent=$("knowledgeFile").files[0]?.name||"";};
+$("uploadDoc").onclick=async()=>{
+ const file=$("knowledgeFile").files[0];if(!file)return $("knowledgeStatus").textContent="Choose a .txt or .md file.";
+ const fd=new FormData();fd.append("file",file);$("knowledgeStatus").textContent="Uploading…";
+ try{const r=await fetch("/api/knowledge",{method:"POST",headers:authHeaders(),body:fd});const d=await r.json();if(!r.ok)throw new Error(d.error);$("knowledgeStatus").textContent="Uploaded: "+d.document.filename;$("knowledgeFile").value="";loadDocuments();}catch(e){$("knowledgeStatus").textContent=e.message;}
+};
+async function loadDocuments(){try{const r=await fetch("/api/knowledge",{headers:authHeaders()});const d=await r.json();if(!r.ok)throw new Error(d.error);$("documents").innerHTML=(d.documents||[]).map(x=>`<div class="docitem"><span>${escapeHtml(x.filename)}</span><button class="pill" data-delete-doc="${x.id}">Delete</button></div>`).join("")||'<p class="muted">No documents uploaded yet.</p>';document.querySelectorAll("[data-delete-doc]").forEach(b=>b.onclick=async()=>{await fetch("/api/knowledge/"+b.dataset.deleteDoc,{method:"DELETE",headers:authHeaders()});loadDocuments();});}catch(e){$("knowledgeStatus").textContent=e.message;}}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+$("videoImage").onchange=()=>$("videoFileName").textContent=$("videoImage").files[0]?.name||"";
+async function uploadReferenceImage(file){
+ const path=`${session.user.id}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,"_")}`;
+ const {error}=await sb.storage.from("vespera-media").upload(path,file,{upsert:false,contentType:file.type});
+ if(error)throw new Error("Reference image upload failed: "+error.message);
+ return sb.storage.from("vespera-media").getPublicUrl(path).data.publicUrl;
+}
+async function generateMedia(kind){
+ const prompt=$(kind+"Prompt").value.trim();if(!prompt)return $("mediaStatus").textContent="Enter a prompt first.";
+ $("mediaStatus").textContent="Submitting generation request…";$("mediaResult").innerHTML="";
+ try{
+  const body=new FormData();body.append("prompt",prompt);
+  if(kind==="video"){
+   const file=$("videoImage").files[0];if(file){const url=await uploadReferenceImage(file);body.append("image_url",url);}
+  }
+  const r=await fetch("/api/media/"+kind,{method:"POST",headers:authHeaders(),body});const d=await r.json();if(!r.ok)throw new Error(d.error);
+  $("mediaStatus").textContent="Generation queued. Waiting for provider…";
+  await pollMedia(d.status_url,d.response_url,kind);
+ }catch(e){$("mediaStatus").textContent=e.message;}
+}
+async function pollMedia(statusUrl,resultUrl,kind){
+ for(let i=0;i<90;i++){
+  await new Promise(r=>setTimeout(r,4000));
+  const r=await fetch("/api/media-status?url="+encodeURIComponent(statusUrl),{headers:authHeaders()});const d=await r.json();
+  if(!r.ok)throw new Error(d.error||"Could not check generation status.");
+  if(d.status==="FAILED")throw new Error(d.error||"Media generation failed.");
+  if(d.status==="COMPLETED"){
+   const rr=await fetch("/api/media-result?url="+encodeURIComponent(resultUrl),{headers:authHeaders()});const out=await rr.json();if(!rr.ok)throw new Error(out.error||"Could not retrieve generated media.");
+   const mediaUrl=kind==="image"?(out.images?.[0]?.url):(out.video?.url||out.videos?.[0]?.url);
+   if(!mediaUrl)throw new Error("Generation finished but provider returned no media URL.");
+   $("mediaResult").innerHTML=kind==="image"?`<img src="${escapeHtml(mediaUrl)}" alt="Generated image">`:`<video controls playsinline src="${escapeHtml(mediaUrl)}"></video>`;
+   $("mediaStatus").textContent="Generation complete.";return;
+  }
+  $("mediaStatus").textContent="Generating… "+(d.status||"IN_QUEUE");
+ }
+ throw new Error("Generation is taking longer than expected. Check again later with the provider request status.");
+}
+$("imageBtn").onclick=()=>generateMedia("image");$("videoBtn").onclick=()=>generateMedia("video");
+init();
+</script></body></html>
